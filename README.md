@@ -2,81 +2,68 @@
 
 A Java Spring Boot backend project that simulates transportation carrier integration, shipment creation, carrier selection, shipping label generation, electronic manifest creation, and invoice validation.
 
-This project is designed around real-world logistics and transportation technology workflows.
-
 ## Tech Stack
 
-- Java
+- Java 17
 - Spring Boot
-- MySQL
+- Spring Data JPA
+- MySQL / H2
 - REST APIs
-- Object-Oriented Programming
-- Data Structures
+- OOP
 - Exception Handling
 - Logging
-- Linux basics
+- Swagger/OpenAPI
 
-## Key Features
+## Main Features
 
-- Create and manage shipments
-- Select carriers based on cost, serviceability, delivery speed, and shipment type
-- Generate shipping labels
-- Create electronic carrier manifests
+- Create shipments
+- Select the best carrier based on destination, cost, speed, and shipment type
+- Generate shipping labels with tracking numbers
+- Create carrier manifests
 - Validate carrier invoices against expected shipment cost
-- Track shipment status
-- Handle exceptions and operational failures
-- Maintain structured logs for debugging and root cause analysis
+- Update shipment status
+- Handle operational exceptions cleanly
 
-## Core Modules
+## Run Locally
 
-### 1. Shipment Management
-Creates shipment records with customer, package, destination, and delivery details.
+```bash
+mvn spring-boot:run
+```
 
-### 2. Carrier Selection
-Selects the best carrier based on:
-- Delivery speed
-- Shipment weight
-- Destination serviceability
-- Cost
-- Service level
+The project runs using H2 by default.
 
-### 3. Shipping Label Generation
-Generates a label response containing:
-- Shipment ID
-- Carrier name
-- Tracking number
-- Origin
-- Destination
-- Service type
+Swagger UI:
 
-### 4. Electronic Manifest
-Groups shipments by carrier and shipping date for carrier handoff.
+```text
+http://localhost:8080/swagger-ui/index.html
+```
 
-### 5. Invoice Validation
-Compares carrier invoice amount with expected shipping cost and flags mismatches.
+H2 Console:
 
-## Sample API Endpoints
+```text
+http://localhost:8080/h2-console
+```
+
+JDBC URL:
+
+```text
+jdbc:h2:mem:carrierdb
+```
+
+## Sample Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | /api/shipments | Create shipment |
-| GET | /api/shipments/{id} | Get shipment details |
-| POST | /api/carriers/select | Select best carrier |
-| POST | /api/labels/generate | Generate shipping label |
-| POST | /api/manifests/create | Create carrier manifest |
-| POST | /api/invoices/validate | Validate carrier invoice |
-| PUT | /api/shipments/{id}/status | Update shipment status |
+| POST | `/api/shipments` | Create shipment |
+| GET | `/api/shipments/{id}` | Get shipment by ID |
+| GET | `/api/shipments` | Get all shipments |
+| POST | `/api/carriers/select/{shipmentId}` | Select best carrier |
+| POST | `/api/labels/generate/{shipmentId}` | Generate shipping label |
+| POST | `/api/manifests/create` | Create manifest |
+| POST | `/api/invoices/validate` | Validate invoice |
+| PUT | `/api/shipments/{id}/status` | Update shipment status |
 
-## Database Tables
-
-- shipments
-- carriers
-- shipping_labels
-- manifests
-- manifest_shipments
-- invoices
-
-## Example Shipment Request
+## Example Create Shipment Request
 
 ```json
 {
@@ -87,3 +74,9 @@ Compares carrier invoice amount with expected shipping cost and flags mismatches
   "shipmentType": "STANDARD",
   "deliverySpeed": "TWO_DAY"
 }
+```
+
+## Resume Line
+
+Carrier Integration & Shipment Workflow Backend System | Java, Spring Boot, MySQL, REST APIs  
+Built a logistics backend system simulating shipment creation, carrier selection, shipping label generation, electronic manifest creation, and invoice validation. Designed REST APIs, applied OOP principles, used relational data storage, implemented carrier-selection logic based on cost/serviceability/speed, and added logging/error handling for debugging and operational support.
